@@ -145,7 +145,7 @@ def create_experiment_runs():
 
 def main():
     print('creating experiment...')
-    check_or_restart_mlflow()
+    # check_or_restart_mlflow()
     create_experiment_runs()
     print('creating experiment with runs: DONE')
 
