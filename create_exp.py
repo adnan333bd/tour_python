@@ -1,13 +1,9 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) RocketML
-#------------------------------------------------------------------------------
-
+# ------------------------------------------------------------------------------
 
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[73]:
-
 
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
@@ -27,7 +23,8 @@ import subprocess
 
 logger = logging.getLogger('RMLDNN|')
 handler = logging.StreamHandler()
-log_format = logging.Formatter('Rank 0: %(asctime)s:%(name)s:%(levelname)s:%(message)s')
+log_format = logging.Formatter(
+    'Rank 0: %(asctime)s:%(name)s:%(levelname)s:%(message)s')
 handler.setFormatter(log_format)
 logger.addHandler(handler)
 
@@ -36,6 +33,7 @@ logger.addHandler(handler)
 #     ip = get('https://api.ipify.org').text
 #     url = "https://w"+''.join(ip.split('.'))+'.babyrocket.net/mlflow'
 #     return url
+
 
 def check_or_restart_mlflow():
     tracking_uri = os.environ.get("TRACKING_URL")
@@ -48,6 +46,7 @@ def check_or_restart_mlflow():
         subprocess.check_output("sudo service mlflow restart".split())
         logger.debug("MLflow connection is successful")
         requests.get(experiments_url, timeout=2.0)
+
 
 def create_experiment_runs():
     categories = ['alt.atheism', 'soc.religion.christian',
@@ -143,18 +142,17 @@ def create_experiment_runs():
         mlflow.sklearn.log_model(text_clf, "model")
         mlflow.log_artifact("report.txt")
 
-# In[ ]:
 
 def main():
-#     mlflow_tracking_url = get_mlflow_tracking_url()
     check_or_restart_mlflow()
     create_experiment_runs()
-    print('done')
+    print('creating experiment with runs: DONE')
+
 
 if __name__ == '__main__':
     try:
         main()
-    except Exception as ex :
-        exceptionMessage =  str(ex)
+    except Exception as ex:
+        exceptionMessage = str(ex)
         print(exceptionMessage)
-        print('FAILED')
+        print('created experiment with runs: FAILED')

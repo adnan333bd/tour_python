@@ -1,0 +1,4 @@
+cd /home/ubuntu/efs
+sudo rm -r tour_python
+git clone https://github.com/adnan333bd/tour_python.git
+/miniconda/bin/python /home/ubuntu/efs/tour_python/create_exp.py
